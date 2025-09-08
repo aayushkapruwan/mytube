@@ -25,7 +25,7 @@ router.route("/getAllvideos").get(
   getAllVideos
 )
 router.put(
-  "/updateVideo/:videoId",
+  "/video/updateVideo/:id",
   upload.single("thumbnail"), // Handle thumbnail if uploaded
   updateVideo
 );

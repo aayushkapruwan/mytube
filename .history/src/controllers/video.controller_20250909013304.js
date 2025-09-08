@@ -46,7 +46,7 @@ const updateVideo = asyncHandler(async (req, res) => {
     throw new Apierror(400, "please give videoId");
   }
   const { title, description } = req.body;
-  const thumbnail = req.file ? req.file.path : null;
+  
     if (!title && !description && !thumbnail) {
     throw new Apierror(400, "please fill the values to be updated");
   }

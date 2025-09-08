@@ -45,9 +45,8 @@ const updateVideo = asyncHandler(async (req, res) => {
   if (!videoId) {
     throw new Apierror(400, "please give videoId");
   }
-  const { title, description } = req.body;
-  const thumbnail = req.file ? req.file.path : null;
-    if (!title && !description && !thumbnail) {
+  const { title, description, thumbnail } = req.body;
+    if (!(title || description) ) {
     throw new Apierror(400, "please fill the values to be updated");
   }
   const video = await Video.findOne({ _id: videoId });
@@ -82,8 +81,8 @@ const publishAVideo = asyncHandler(async (req, res) => {
   ) {
     throw new Apierror(400, "please enter title and description correctly");
   }
-  const videoLocalPath = req.files?.Video[0].path;
-  const thumbnailLocalPath = req.files?.thumbnail[0].path;
+  const videoLocalPath = req.files?.Video.path;
+  const thumbnailLocalPath = req.files?.thumbnail.path;
   if (!videoLocalPath) {
     throw new Apierror(400, "please upload the video");
   }

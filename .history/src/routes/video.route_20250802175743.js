@@ -5,7 +5,7 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { getAllVideos } from "../controllers/video.controller.js";
 import { updateVideo } from "../controllers/video.controller.js";
 const router = Router();
-router.route("/publishAVideo").post(
+router.route("/publishVideo").post(
   verifyJWT,
   upload.fields([
     {
@@ -24,10 +24,6 @@ router.route("/getAllvideos").get(
   verifyJWT,
   getAllVideos
 )
-router.put(
-  "/updateVideo/:videoId",
-  upload.single("thumbnail"), // Handle thumbnail if uploaded
-  updateVideo
-);
+router.put("/updateVideo/:videoId", updateVideo);
 
 export default router;

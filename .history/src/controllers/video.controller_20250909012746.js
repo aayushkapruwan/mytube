@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Video } from "../models/video.model.js";
 import { Apierror } from "../utils/ApiError.js";
-import { Apiresponse } from "../utils/ApiResponse.js";
+import api
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { cloudinaryUpload } from "../utils/cloudinary.js";
 import * as fs from "fs";
@@ -45,8 +45,7 @@ const updateVideo = asyncHandler(async (req, res) => {
   if (!videoId) {
     throw new Apierror(400, "please give videoId");
   }
-  const { title, description } = req.body;
-  const thumbnail = req.file ? req.file.path : null;
+  const { title, description, thumbnail } = req.body;
     if (!title && !description && !thumbnail) {
     throw new Apierror(400, "please fill the values to be updated");
   }

@@ -24,10 +24,6 @@ router.route("/getAllvideos").get(
   verifyJWT,
   getAllVideos
 )
-router.put(
-  "/updateVideo/:videoId",
-  upload.single("thumbnail"), // Handle thumbnail if uploaded
-  updateVideo
-);
+router.put("/updateVideo/:videoId", updateVideo);
 
 export default router;
