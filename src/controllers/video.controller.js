@@ -144,7 +144,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, {}, "the requested video is deleted"));
+    .json(new Apiresponse(200, {}, "the requested video is deleted"));
 });
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
@@ -156,7 +156,7 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
   if (!video) {
     throw new Apierror(400, "plase give a valid video id");
   }
-  video.status = !video.status;
+  video.isPublished = !video.isPublished;
   const updatedVideo = await video.save();
   if (!updatedVideo) {
     throw new Apierror(
@@ -165,13 +165,10 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
     );
   }
   return res.status(
-    200,
-    updateVideo,
-    `status of video is ${video.status} after updation`
-  );
+    200).json( new Apiresponse(200, updatedVideo, "status updated successfully"))  
 });
 
-const viewCount = asyncHandler(async (req, res) => {
+const viewCountIncrease = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
   if (!videoId) {
     throw new ApiError(400, "invalid videoid");
@@ -180,16 +177,16 @@ const viewCount = asyncHandler(async (req, res) => {
   if (!video) {
     throw new ApiError(400, "video not found");
   }
-  video.views = video.views++;
-  const updatedVideo = await user.save();
+  video.views = video.views+1;
+  const updatedVideo = await video.save();
 
   if (!updatedVideo) {
-    throw new ApiError(500, "internal server error");
+    throw new Apierror(500, "internal server error");
   }
   return res
     .status(200)
     .json(
-      new ApiResponse(200, updatedVideo, "view count increased successfully")
+      new Apiresponse(200, updatedVideo, "view count increased successfully")
     );
 });
 
@@ -200,5 +197,5 @@ export {
   updateVideo,
   deleteVideo,
   togglePublishStatus,
-  viewCount,
+  viewCountIncrease,
 };
