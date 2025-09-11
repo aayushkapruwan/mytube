@@ -1,7 +1,7 @@
-import { Apiresponse } from "../utils/ApiResponse.js";
+import { Apiresponse } from "../utils/apiresponse.js";
 import { Tweet } from "../models/tweet.model.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { Apierror } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asynchandler.js";
+import { Apierror } from "../utils/Apierror.js";
 
 const createTweet = asyncHandler(async (req, res) => {
   const { content } = req.body;

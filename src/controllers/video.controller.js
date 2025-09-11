@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import { Video } from "../models/video.model.js";
-import { Apierror } from "../utils/ApiError.js";
-import { Apiresponse } from "../utils/ApiResponse.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { Apierror } from "../utils/Apierror.js";
+import { Apiresponse } from "../utils/apiresponse.js";
+import { asyncHandler } from "../utils/asynchandler.js";
 import { cloudinaryUpload } from "../utils/cloudinary.js";
 import * as fs from "fs";
 
@@ -47,7 +47,7 @@ const updateVideo = asyncHandler(async (req, res) => {
   }
   const { title, description } = req.body;
   const thumbnail = req.file ? req.file.path : null;
-    if (!title && !description && !thumbnail) {
+  if (!title && !description && !thumbnail) {
     throw new Apierror(400, "please fill the values to be updated");
   }
   const video = await Video.findOne({ _id: videoId });
@@ -92,12 +92,27 @@ const publishAVideo = asyncHandler(async (req, res) => {
   }
   const videoCloud = await cloudinaryUpload(videoLocalPath);
   const thumbnailCloud = await cloudinaryUpload(thumbnailLocalPath);
-  if (!videoCloud) {
-    fs.unlink(thumbnailLocalPath);
+
+  if (thumbnailLocalPath && fs.existsSync(thumbnailLocalPath)) {
+    fs.unlink(thumbnailLocalPath, (err) => {
+      if (err) {
+        console.log("Error deleting thumbnail:", err);
+      } else {
+        console.log("Thumbnail deleted successfully!");
+      }
+    });
   }
-  if (!thumbnailCloud) {
-    fs.unlink(videoLocalPath);
+
+  if (videoLocalPath && fs.existsSync(videoLocalPath)) {
+    fs.unlink(videoLocalPath, (err) => {
+      if (err) {
+        console.log("Error deleting video:", err);
+      } else {
+        console.log("Video deleted successfully!");
+      }
+    });
   }
+
   const publishedVideo = await Video.create({
     videoFile: videoCloud.url,
     thumbnail: thumbnailCloud.url,
@@ -164,8 +179,9 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
       "status can't be updated please try after sometime"
     );
   }
-  return res.status(
-    200).json( new Apiresponse(200, updatedVideo, "status updated successfully"))  
+  return res
+    .status(200)
+    .json(new Apiresponse(200, updatedVideo, "status updated successfully"));
 });
 
 const viewCountIncrease = asyncHandler(async (req, res) => {
@@ -177,7 +193,7 @@ const viewCountIncrease = asyncHandler(async (req, res) => {
   if (!video) {
     throw new ApiError(400, "video not found");
   }
-  video.views = video.views+1;
+  video.views = video.views + 1;
   const updatedVideo = await video.save();
 
   if (!updatedVideo) {

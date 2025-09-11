@@ -107,9 +107,7 @@ src/
 │   ├── like.controller.js
 │   ├── playlist.controller.js
 │   ├── subscription.controller.js
-│   ├── tweet.controller.js
-│   ├── dashboard.controller.js
-│   └── healthcheck.controller.js
+│   └── tweet.controller.js
 ├── db/
 │   └── index.js           # Database connection
 ├── middlewares/           # Custom middlewares
@@ -125,8 +123,12 @@ src/
 │   └── tweet.model.js
 ├── routes/                # API routes
 │   ├── user.router.js
+│   ├── video.route.js
+│   ├── comment.route.js
+│   ├── like.route.js
+│   ├── playlist.route.js
 │   ├── subscriber.router.js
-│   └── video.route.js
+│   └── tweet.route.js
 └── utils/                 # Utility functions
     ├── apierror.js
     ├── apiresponse.js

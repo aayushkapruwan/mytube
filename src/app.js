@@ -18,9 +18,11 @@ import subscriptionRouter from "./routes/subscriber.router.js";
 import videoRouter from "./routes/video.route.js";
 import tweetRouter from "./routes/tweet.route.js"
 import playlistRouter from "./routes/playlist.route.js";
+import likeRouter from "./routes/like.route.js"
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/subscriber", subscriptionRouter);
 app.use("/api/v1/video", videoRouter);
 app.use("/api/v1/tweet",tweetRouter );
 app.use("/api/v1/playlist", playlistRouter);
+app.use("/api/v1/like", likeRouter);
 export { app };

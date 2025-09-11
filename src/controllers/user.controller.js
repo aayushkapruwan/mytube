@@ -1,8 +1,8 @@
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { Apierror } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asynchandler.js";
+import { Apierror } from "../utils/Apierror.js";
 import { User } from "../models/user.model.js";
 import { cloudinaryUpload } from "../utils/cloudinary.js";
-import { Apiresponse } from "../utils/ApiResponse.js";
+import { Apiresponse } from "../utils/apiresponse.js";
 import jwt from "jsonwebtoken";
 import * as fs from "fs";
 import mongoose from "mongoose";
@@ -53,6 +53,19 @@ export const registerUser = asyncHandler(async function (req, res, next) {
   if (!createdUser) {
     throw new Apierror(500, "Something went wrong while registering the error");
   }
+  fs.unlink(avatarLocalPath, (err) => {
+    if (err) {
+      console.log("error while deleting the file");
+    }
+  });
+  if (coverImageLocalPath) {
+    fs.unlink(coverImageLocalPath, (err) => {
+      if (err) {
+        console.log("error while deleting the file");
+      }
+    });
+  }
+  
   return res
     .status(201)
     .json(new Apiresponse(200, createdUser, "User registered successfully"));

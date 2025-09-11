@@ -1,7 +1,7 @@
 import { Playlist } from "../models/playlist.model.js";
-import { Apierror } from "../utils/ApiError.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { Apiresponse } from "../utils/ApiResponse.js";
+import { Apierror } from "../utils/Apierror.js";
+import { asyncHandler } from "../utils/asynchandler.js";
+import { Apiresponse } from "../utils/apiresponse.js";
 import { Video } from "../models/video.model.js";
 import {User} from "../models/user.model.js"
 const createPlaylist = asyncHandler(async (req, res) => {

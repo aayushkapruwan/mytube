@@ -1,12 +1,7 @@
-import { publishAVideo } from "../controllers/video.controller.js";
+import { publishAVideo, getAllVideos, updateVideo, deleteVideo, togglePublishStatus, viewCountIncrease, getVideoById } from "../controllers/video.controller.js";
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { getAllVideos } from "../controllers/video.controller.js";
-import { updateVideo } from "../controllers/video.controller.js";
-import { deleteVideo } from "../controllers/video.controller.js";
-import { togglePublishStatus } from "../controllers/video.controller.js";
-import { viewCountIncrease } from "../controllers/video.controller.js";
 const router = Router();
 router.route("/publishAVideo").post(
   verifyJWT,
@@ -23,10 +18,8 @@ router.route("/publishAVideo").post(
   publishAVideo
 );
 
-router.route("/getAllvideos").get(
-  verifyJWT,
-  getAllVideos
-)
+router.route("/getAllvideos").get(getAllVideos)
+router.route("/:videoId").get(getVideoById);
 router.put(
   "/updateVideo/:videoId",
   upload.single("thumbnail"), // Handle thumbnail if uploaded
